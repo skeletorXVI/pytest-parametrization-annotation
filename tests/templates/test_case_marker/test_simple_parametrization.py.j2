@@ -1,0 +1,33 @@
+{{ "from typing import Annotated" }}
+import pytest
+{{ "from pytest_parametrization_annotation import Parametrized" }}
+
+
+
+{% for key, value in fixtures.items() -%}
+@pytest.fixture
+def {{ key }}():
+    return {% if parameters[key].type.__name__ == "str" -%}"{{ value }}"{%- else -%}{{ value }}{% endif -%}
+{%- endfor %}
+
+
+{% for case in cases -%}
+@pytest.mark.case(
+    {% if case.has_id %}"{{ case.id }}",{% endif %}
+    {% for key, value in case.kwargs.items() -%}
+        {{ key }}={% if parameters[key].type.__name__ == "str" -%}"{{ value }}"{%- else -%}{{ value }}{% endif -%},
+    {% endfor -%}
+)
+{%- endfor %}
+def test(
+        {% for name, parameter in parameters.items() -%}
+            {{ name }}: {% if parameter.annotation %}Annotated[{{ parameter.type.__name__ }}, {{ parameter.annotation }}]{% else %}{{ parameter.type.__name__ }}{% endif %},
+        {% endfor -%}
+    ):
+    {% for name, parameter in parameters.items() -%}
+    assert isinstance({{ name }}, {{ parameter.type.__name__ }})
+    {% endfor -%}
+    {% if not parameters -%}
+    # Pass when no parameters are defined
+    pass
+    {% endif -%}
