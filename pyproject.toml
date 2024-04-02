@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "pytest-parametrization-annotations"
+name = "pytest-parametrization-annotation"
 version = "0.1.0"
-description = "A pytest library for parametrizing tests with type hints."
+description = "A pytest library for parametrizing tests using type hints."
 authors = ["Fabian Haenel <contact@fabian-haenel.io>"]
 readme = "README.md"
 packages = [{include = "pytest_parametrization_annotation", from = "src"}]
