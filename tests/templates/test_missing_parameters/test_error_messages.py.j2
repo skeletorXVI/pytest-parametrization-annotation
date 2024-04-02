@@ -1,0 +1,20 @@
+{{ "from typing import Annotated" }}
+
+import pytest
+{{ "from pytest_parametrization_annotation import Parametrized" }}
+
+
+{% for case in cases -%}
+@pytest.mark.case(
+    {% if case.id != None %}"{{ case.id }}",{% endif %}
+    {% for parameter in case.parameters -%}
+        {{ parameter }}=1,
+    {% endfor -%}
+)
+{% endfor %}
+def test(
+    {% for parameter in parameters -%}
+        {{ parameter }}: Annotated[int, Parametrized],
+    {% endfor -%}
+) -> None:
+    assert True

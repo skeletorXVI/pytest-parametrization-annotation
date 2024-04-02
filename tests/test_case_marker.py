@@ -355,20 +355,3 @@ def test_indirect_parametrization(
 
     result = pytester.runpytest()
     result.assert_outcomes(passed=expected_passed, failed=expected_failed)
-
-
-def test_missing_parameter(pytester):
-    python_code = open(
-        os.path.join(
-            os.path.dirname(os.path.realpath(__file__)),
-            "templates/test_case_marker/missing_parameter.py",
-        )
-    ).read()
-    pytester.makepyfile(python_code)
-
-    result = pytester.runpytest()
-    assert (
-        "E   pytest_parametrization_annotation.exceptions.ParameterValueUndefined: test_missing_parameter.py::test | Case 'example': Failed to populate because the parameter 'second' is not provided and default is not configured." # noqa: E501
-        in result.outlines
-    )
-    result.assert_outcomes(errors=1)

@@ -1,13 +1,17 @@
-from typing import Annotated, Any, Callable, Mapping, get_origin, get_type_hints
+from __future__ import annotations
 
-from _pytest.python import Metafunc
+from typing import Annotated, Any, Callable, Mapping, get_origin, get_type_hints, TYPE_CHECKING
+
+from _pytest.outcomes import fail
 
 from pytest_parametrization_annotation.annotation import (
     Parametrized,
     _Default,
     _DefaultCallable,
 )
-from pytest_parametrization_annotation.exceptions import ParameterValueUndefined
+
+if TYPE_CHECKING:
+    from _pytest.python import Metafunc
 
 
 def get_parameters_from_type_hints(func: Callable) -> dict[str, Parametrized]:
@@ -33,7 +37,7 @@ def get_parameters_from_type_hints(func: Callable) -> dict[str, Parametrized]:
 
 
 def get_parametrized_value(
-    kwargs: Mapping[str, Any], parameter: str, meta: Parametrized
+        kwargs: Mapping[str, Any], parameter: str, meta: Parametrized
 ) -> Any:
     if parameter in kwargs:
         return kwargs[parameter]
@@ -57,10 +61,10 @@ def register_parametrized_cases(metafunc: Metafunc):
 
         cases = []
         ids = []
-        for i, marker in enumerate(markers):
+        fails: list[tuple[str, str]] = []
+        for i, marker in enumerate(reversed(markers)):
             case_id = marker.args[0] if len(marker.args) > 0 else None
             ids.append(case_id)
-
             try:
                 cases.append(
                     tuple(
@@ -69,11 +73,16 @@ def register_parametrized_cases(metafunc: Metafunc):
                     )
                 )
             except KeyError as e:
-                raise ParameterValueUndefined(
-                    function_definition.nodeid,
-                    case_id or i,
-                    e.args[0],
-                ) from e
+                case_descriptor = f"named '{case_id}'" if case_id else f"number {i + 1}"
+                fails.append((case_descriptor, e.args[0]))
+
+        if fails:
+            fail_message = "\n".join(
+                f"{function_definition.nodeid} | Case {case_descriptor}: Failed to populate because the parameter '{parameter}' is not provided and default is not configured."  # noqa: E501
+                for case_descriptor, parameter in fails
+            )
+
+            fail(fail_message, pytrace=False)
 
         metafunc.parametrize(
             tuple(parameters),
