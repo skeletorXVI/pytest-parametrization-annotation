@@ -41,7 +41,7 @@ jobs:
       - name: Install dev dependencies
         if: steps.poetry-dependencies-cache.outputs.cache-hit != 'true'
         run: |
-          python -m poetry install --only=development,linting
+          python -m poetry install --only=testing,linting
 
       - name: Check for formatting issues
         run:  python -m poetry run black --check --diff .
