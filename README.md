@@ -1,5 +1,7 @@
 # Package to use type annotations for parametrization in pytest
 
+[![codecov](https://codecov.io/gh/skeletorXVI/pytest-parametrization-annotation/graph/badge.svg?token=22CXIHTW1Q)](https://codecov.io/gh/skeletorXVI/pytest-parametrization-annotation)
+
 This package allows the declaration of parametrization using type annotations and definition of test cases using a
 decorator.
 
