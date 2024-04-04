@@ -11,7 +11,8 @@ if TYPE_CHECKING:
 
 @pytest.fixture
 def doubled(request: FixtureRequest) -> int:
-    return request.param * 2
+    value: int = request.param
+    return value * 2
 
 
 @pytest.mark.case(
