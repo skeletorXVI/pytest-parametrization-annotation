@@ -7,8 +7,8 @@ from jinja2 import Environment, FileSystemLoader
 @pytest.mark.parametrize(
     "filename, expected_errors",
     [
-        ("test_with_default.py", [("named 'example'", "first")]),
-        ("test_with_default_factory.py", [("named 'example'", "second")]),
+        ("with_default.py", [("named 'example'", "first")]),
+        ("with_default_factory.py", [("named 'example'", "second")]),
     ],
 )
 def test_error_message_with_default(
@@ -363,7 +363,7 @@ def test_error_message(
             os.path.join(os.path.dirname(os.path.realpath(__file__)), "templates")
         ),
     )
-    template = env.get_template("test_missing_parameters/test_error_messages.py.j2")
+    template = env.get_template("test_missing_parameters/error_messages.py.j2")
     python_code = template.render(cases=cases, parameters=parameters)
 
     pytester.makepyfile(python_code)
