@@ -44,9 +44,9 @@ black = "v24.3"
 mypy = "^1.9.0"
 
 [tool.poetry.group.testing.dependencies]
-pytest-cov = "*"
 jinja2 = ">=3"
 tox = "^4.14.2"
+coverage = {extras = ["toml"], version = ">=6.5.0"}
 
 [build-system]
 requires = ["poetry-core"]
