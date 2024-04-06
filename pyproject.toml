@@ -72,3 +72,8 @@ python_version = "3.10"
 warn_return_any = true
 warn_unused_configs = true
 files = ["src", "tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "if TYPE_CHECKING:"
+]
