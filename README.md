@@ -111,3 +111,30 @@ from pytest_parametrization_annotation import Parametrized
 def test(a: Annotated[int, Parametrized]) -> None:
     ...
 ```
+
+## Develop
+
+### Install dependencies
+
+```shell
+poetry install
+```
+
+### Format code
+
+```shell
+poetry run ruff format
+poetry run black .
+```
+
+### Run static type checker
+
+```shell
+poetry run mypy .
+```
+
+### Run tests
+
+```shell
+poetry run tox run-parallel
+```

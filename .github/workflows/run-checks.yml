@@ -60,7 +60,6 @@ jobs:
           source .venv/bin/activate
           coverage erase
           tox run-parallel -f py${{ matrix.python-version }} --parallel-no-spinner --parallel-live
-          coverage combine
           coverage xml
 
       - name: Upload coverage reports to Codecov
