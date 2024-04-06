@@ -324,7 +324,7 @@ def test_simple_parametrization(
             os.path.join(os.path.dirname(os.path.realpath(__file__)), "templates")
         ),
     )
-    template = env.get_template("test_case_marker/test_simple_parametrization.py.j2")
+    template = env.get_template("test_case_marker/simple_parametrization.py.j2")
     python_code = template.render(cases=cases, parameters=parameters, fixtures=fixtures)
 
     pytester.makepyfile(python_code)

@@ -1,5 +1,8 @@
 # Package to use type annotations for parametrization in pytest
 
+[![codecov](https://codecov.io/gh/skeletorXVI/pytest-parametrization-annotation/graph/badge.svg?token=22CXIHTW1Q)](https://codecov.io/gh/skeletorXVI/pytest-parametrization-annotation)
+<a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+
 This package allows the declaration of parametrization using type annotations and definition of test cases using a
 decorator.
 
@@ -107,4 +110,31 @@ from pytest_parametrization_annotation import Parametrized
 @pytest.mark.case("Example", a=1)
 def test(a: Annotated[int, Parametrized]) -> None:
     ...
+```
+
+## Develop
+
+### Install dependencies
+
+```shell
+poetry install
+```
+
+### Format code
+
+```shell
+poetry run ruff format
+poetry run black .
+```
+
+### Run static type checker
+
+```shell
+poetry run mypy .
+```
+
+### Run tests
+
+```shell
+poetry run tox run-parallel
 ```

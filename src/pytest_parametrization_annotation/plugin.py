@@ -9,7 +9,9 @@ if TYPE_CHECKING:
 
 
 def pytest_configure(config: Config) -> None:
-    config.addinivalue_line("markers", "case: Parametrize the test with the provided values.")
+    config.addinivalue_line(
+        "markers", "case: Parametrize the test with the provided values."
+    )
 
 
 def pytest_generate_tests(metafunc: Metafunc) -> None:

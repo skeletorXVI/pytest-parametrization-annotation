@@ -78,3 +78,8 @@ coverage.xml
 # OS
 .DS_Store
 Thumbs.db
+
+# Coverage
+.coverage
+.coverage.*
+.cache

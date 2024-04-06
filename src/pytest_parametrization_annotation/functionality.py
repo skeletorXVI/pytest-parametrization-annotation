@@ -1,6 +1,14 @@
 from __future__ import annotations
 
-from typing import Annotated, Any, Callable, Mapping, get_origin, get_type_hints, TYPE_CHECKING
+from typing import (
+    Annotated,
+    Any,
+    Callable,
+    Mapping,
+    get_origin,
+    get_type_hints,
+    TYPE_CHECKING,
+)
 
 from _pytest.outcomes import fail
 
@@ -37,7 +45,7 @@ def get_parameters_from_type_hints(func: Callable) -> dict[str, Parametrized]:
 
 
 def get_parametrized_value(
-        kwargs: Mapping[str, Any], parameter: str, meta: Parametrized
+    kwargs: Mapping[str, Any], parameter: str, meta: Parametrized
 ) -> Any:
     if parameter in kwargs:
         return kwargs[parameter]
