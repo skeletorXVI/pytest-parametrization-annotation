@@ -39,20 +39,23 @@ def _one_parametrized_parameter(first: Annotated[int, Parametrized]) -> None:
     pass
 
 
-def _one_nested_annotated_parameter(first: Annotated[Annotated[int, "foo"], "foo"]) -> None:
+def _one_nested_annotated_parameter(
+    first: Annotated[Annotated[int, "foo"], "foo"],
+) -> None:
     pass
 
 
 def _one_annotated_nested_parametrized_parameter(
-    first: Annotated[Annotated[int, Parametrized], "str"]
+    first: Annotated[Annotated[int, Parametrized], "str"],
 ) -> None:
     pass
 
 
 def _one_parametrized_annotated_parameter(
-    first: Annotated[Annotated[int, "foo"], Parametrized]
+    first: Annotated[Annotated[int, "foo"], Parametrized],
 ) -> None:
     pass
+
 
 def _one_parameter_one_annotated_parameter(
     first: int, second: Annotated[int, "foo"]
@@ -108,15 +111,24 @@ def _two_parametrized_parameters_one_generic_parameter(
         (_one_parametrized_annotated_parameter, {"first": Parametrized()}),
         (_one_parameter_one_annotated_parameter, {}),
         (_one_parameter_one_parametrized_parameter, {"second": Parametrized()}),
-        (_one_annotated_parameter_one_parametrized_parameter, {"second": Parametrized()}),
-        (_two_parametrized_parameters, {"first": Parametrized(), "second": Parametrized()}),
+        (
+            _one_annotated_parameter_one_parametrized_parameter,
+            {"second": Parametrized()},
+        ),
+        (
+            _two_parametrized_parameters,
+            {"first": Parametrized(), "second": Parametrized()},
+        ),
         (
             _two_parametrized_parameters_one_annotated_parameter,
-            {"first": Parametrized(), "second": Parametrized(),},
+            {
+                "first": Parametrized(),
+                "second": Parametrized(),
+            },
         ),
         (
             _two_parametrized_parameters_one_generic_parameter,
-            {"first": Parametrized(),  "third": Parametrized()},
+            {"first": Parametrized(), "third": Parametrized()},
         ),
     ],
 )
