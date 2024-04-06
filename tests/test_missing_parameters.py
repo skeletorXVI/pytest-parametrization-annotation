@@ -4,6 +4,10 @@ import pytest
 from jinja2 import Environment, FileSystemLoader
 
 
+def _build_expected_error_output(filename: str, case: str, parameter: str) -> str:
+    return f"{filename}::test | Case {case}: Failed to populate because the parameter '{parameter}' is not provided and default is not configured."
+
+
 @pytest.mark.parametrize(
     "filename, expected_errors",
     [
@@ -17,7 +21,9 @@ def test_error_message_with_default(
     expected_errors: list[tuple[str, str]],
 ) -> None:
     expected_error_messages = [
-        f"test_error_message_with_default.py::test | Case {case}: Failed to populate because the parameter '{parameter}' is not provided and default is not configured."
+        _build_expected_error_output(
+            "test_error_message_with_default.py", case, parameter
+        )
         for case, parameter in expected_errors
     ]
 
@@ -35,6 +41,9 @@ def test_error_message_with_default(
         line
         for line in result.outlines
         if "Failed to populate because the parameter" in line
+        # From pytest version > 7.3 the first error message is repeated in the summary.
+        # We only verify the listing of all errors, not the summary.
+        and not line.startswith("ERROR test_error_message_with_default.py")
     ]
 
     assert actual_error_messages == expected_error_messages
@@ -353,7 +362,7 @@ def test_error_message(
     expected_errors: list[tuple[str, str]],
 ) -> None:
     expected_error_messages = [
-        f"test_error_message.py::test | Case {case}: Failed to populate because the parameter '{parameter}' is not provided and default is not configured."
+        _build_expected_error_output("test_error_message.py", case, parameter)
         for case, parameter in expected_errors
     ]
 
@@ -374,6 +383,9 @@ def test_error_message(
         line
         for line in result.outlines
         if "Failed to populate because the parameter" in line
+        # From pytest version > 7.3 the first error message is repeated in the summary.
+        # We only verify the listing of all errors, not the summary.
+        and not line.startswith("ERROR test_error_message.py")
     ]
 
     assert actual_error_messages == expected_error_messages
