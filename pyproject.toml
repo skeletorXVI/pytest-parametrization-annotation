@@ -74,6 +74,9 @@ warn_return_any = true
 warn_unused_configs = true
 files = ["src", "tests"]
 
+[tool.coverage.run]
+data_file = ".coverage.${TOX_ENV_NAME}"
+
 [tool.coverage.report]
 exclude_lines = [
     "if TYPE_CHECKING:"
