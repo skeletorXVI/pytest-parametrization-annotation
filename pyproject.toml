@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "pytest-parametrization-annotation"
-version = "0.1.0"
+version = "1.0.0"
 description = "A pytest library for parametrizing tests using type hints."
 authors = ["Fabian Haenel <contact@fabian-haenel.io>"]
 readme = "README.md"
 packages = [{include = "pytest_parametrization_annotation", from = "src"}]
 classifiers = [
     # Status
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
 
     # License
     "License :: OSI Approved :: BSD License",
@@ -33,11 +33,9 @@ classifiers = [
 [tool.poetry.plugins."pytest11"]
 pytest-parametrization-annotation = "pytest_parametrization_annotation.plugin"
 
-
 [tool.poetry.dependencies]
 python = ">=3.10"
 pytest = ">=7"
-
 
 [tool.poetry.group.linting.dependencies]
 ruff = "v0.8.2"
